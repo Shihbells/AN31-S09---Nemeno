@@ -1,13 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Array</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Array and its Operation</title>
+    <style>
+        body {
+            font-family: calibri, sans-serif;
+            background: linear-gradient(to bottom right, #daf1f9, #c1e0f7);
+            color: #00263b;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        h1, h2 {
+            color: #006494;
+        }
+        #code {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-	<h1>Array and its Operation</h1>
+    <h1>Mini Activity - 241018</h1>
 
-	<script src="index.js"></script>
+    <h2>Source Code:</h2>
+    <pre id="code">
+//create studentGrades array
+	let student1 = ['Ryusang', [90, 94, 97], 'pass'];
+	let student2 = ['San', [85, 70, 93], 'pass'];
+	let student3 = ['Wooyoung', [75, 88, 65], 'pass'];
+
+	let studentGrades = [student1, student2, student3];
+	console.log(studentGrades); 
+
+//add another student
+	studentGrades.push(['Yunho', [75, 95, 70], 'pass']);
+	console.log(studentGrades);
+
+//average grades and update
+	studentGrades.forEach(student => {
+		let name = student[0];
+		let grades = student[1];
+		let average = grades.reduce((sum, grade) => sum + grade, 0) / grades.length;
+
+		console.log(name + "'s average is: " + average.toFixed(2));
+
+	//update
+		if (average < 70) {
+			student[2] = "fail";
+		} else {
+			student[2] = "pass";
+		}
+	});
+
+//optimization
+	let updatedStudentGrades = studentGrades.map(student => {
+		let name = student[0];
+		let grades = student[1];
+		let average = grades.reduce((sum, grade) => sum + grade, 0) / grades.length;
+
+	//update based on scale
+		let status = "";
+		if (average > 85) {
+			status = "honor pass";
+		} else if (average >= 70) {
+			status = "pass";
+		} else {
+			status = "fail";
+		}
+
+		return [name, grades, status];
+	});
+
+	let totalGrades = studentGrades.flatMap(student => student[1]);
+	let classAverage = totalGrades.reduce((sum, grade) => sum + grade, 0) / totalGrades.length;
+
+	console.log('The class average is: ' + classAverage.toFixed(2));
+
+//new output w/ grades and status
+	console.log("New Student Grades: ", updatedStudentGrades);
+    </pre>
+
+    <script src="index.js"></script>
 </body>
 </html>
